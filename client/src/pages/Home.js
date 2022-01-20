@@ -1,63 +1,19 @@
-import axios from "axios";
-import { useContext, useEffect, useState } from "react";
-import { AuthContext } from "../providers/AuthProvider";
+import {useState} from 'react'
+import {Divider, Header, Image, Input, Label, Segment} from 'semantic-ui-react'
+import BraintreeDrop from '../components/BraintreeDrop'
+
 const Home = () => {
-  const auth = useContext(AuthContext);
-  const [cats, setCats] = useState([]);
-
-  useEffect(() => {
-    getCats();
-  }, []);
-
-  const getCats = async () => {
-    try {
-      // NOTE: access-token is getting sent here (devise-axios)
-      let res = await axios.get("/api/cats");
-      setCats(res.data);
-    } catch (err) {
-      alert("err in getCats()");
-    }
-  };
-  const sample = () => {
-    if (cats.length) {
-      const index = Math.floor(Math.random() * cats.length);
-      return cats[index];
-    }
-    return null;
-  };
-  const upVote = (id) => {
-    console.log(id);
-  };
-  // no DB interaction
-  const downVote = (id) => {
-    console.log(id);
-    // remove Cat from list
-    const filteredCats = cats.filter((cat) => cat.id !== id);
-    // get a new Cat to show
-    setCats(filteredCats);
-  };
-  const renderCat = () => {
-    let cat = sample();
-    if (!cat) {
-      return <p>No More Cats</p>;
-    }
-    return (
-      <div>
-        <h1>{cat.name}</h1>
-        <p>breed: {cat.breed}</p>
-        <button onClick={() => upVote(cat.id)}>like</button>
-        <button onClick={() => downVote(cat.id)}>pass</button>
-      </div>
-    );
-  };
-
+  const [amount, setAmount] = useState(100.00)
+  
   return (
-    <div>
-      <h1>Home!</h1>
-      <code>{JSON.stringify(auth)}</code>
-      <hr />
-      {renderCat()}
-    </div>
+    <Segment>
+      <Header>Home!</Header>
+      <Image centered size='small' src='https://images.squarespace-cdn.com/content/v1/5e9e77367eb5e10d5b687548/1614212204352-L0EZ20029ZRFUYDMPWM7/tjs-everything-bagel-spice' />
+      <Label color='green'>Payment Amount</Label>
+      <Input value={amount} onChange={(e)=> setAmount(e.target.value)} />
+      <Divider />
+      <BraintreeDrop amount={amount}/>
+    </Segment>
   );
 };
 export default Home;
