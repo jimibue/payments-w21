@@ -5,9 +5,9 @@ import Protected from "./pages/Protected";
 import { Route, Routes } from "react-router-dom";
 import Layout from "./pages/Layout";
 import RequireAuth from "./components/RequireAuth";
-import Navbar from "./components/Navbar";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
+import PaymentSuccess from "./pages/PaymentSuccess";
 
 function App() {
   return (
@@ -18,6 +18,7 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route path="/" element={<Home />} />
+        <Route path="/payment_success" element={<PaymentSuccess />} />
         <Route element={<RequireAuth />}>
           {/* protected routes go here */}
           <Route path="/protected" element={<Protected />} />
